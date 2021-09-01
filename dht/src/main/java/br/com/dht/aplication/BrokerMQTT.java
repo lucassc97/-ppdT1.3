@@ -134,20 +134,16 @@ public class BrokerMQTT extends Thread {
 			subJoin();
 
 			while (listId.size() < 8) {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			}
 			Collections.sort(listId);
-			System.out.println("[xxx] Received: '" + listId.toString());
+			System.out.println("[xxx] Lista Ordenada: '" + listId.toString());
 
+			// Concluindo etapa de Boot Concluida
 			pubJoin();
 
-			// Etapa de Boot Concluida
-			Thread.sleep(1000);
-
 			subGet();
-
 			subPut();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

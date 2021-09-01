@@ -16,6 +16,7 @@ public class Node extends Thread {
 
 	private Long nodeId;
 	private Long ant;
+	private Long suc;
 	private Long intervalo;
 	private Map<Long, String> hash = new HashMap<Long, String>();
 
@@ -59,8 +60,13 @@ public class Node extends Thread {
 
 			if (x == 0) {
 				ant = Long.valueOf(list.get(list.size() - 1));
+				suc = Long.valueOf(list.get(1));
+			} else if (x == list.size() - 1) {
+				ant = Long.valueOf(list.get(x - 1));
+				suc = Long.valueOf(list.get(0));
 			} else {
 				ant = Long.valueOf(list.get(x - 1));
+				suc = Long.valueOf(list.get(x + 1));
 			}
 
 			System.out.println(" [x] Receivede Node Join: " + x + " nodeId: " + nodeId + " ant: " + ant);
@@ -174,16 +180,14 @@ public class Node extends Thread {
 			/* Publica Seu id */
 			pubJoin();
 
-			Thread.sleep(1000);
-
 			/* Lê o anterior */
 			subJoin();
 
-			Thread.sleep(1000);
+			while (ant == null) {
+				Thread.sleep(200);
+			}
 
-			/**/
 			subGet();
-
 			subPut();
 
 		} catch (Exception e) {

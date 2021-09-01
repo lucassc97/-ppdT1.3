@@ -84,10 +84,6 @@ public class Client extends Thread {
 
 			Thread.sleep(2000);
 			System.out.println(" [xxx]");
-			pubGet("5");
-
-			Thread.sleep(2000);
-			System.out.println(" [xxx]");
 			pubPut("5", "Olá Mundo!");
 
 			Thread.sleep(2000);
@@ -102,20 +98,6 @@ public class Client extends Thread {
 			Thread.sleep(2000);
 			System.out.println(" [xxx]");
 			pubGet("4294967295");
-
-			////////////////////
-
-			int n = 32;
-			long intervalo = (long) Math.pow(2, n);
-
-			while (true) {
-				long nodeId = (long) (Math.random() * (intervalo));
-
-				pubPut(String.valueOf(nodeId), nodeId + " voce");
-
-				pubGet(String.valueOf(nodeId));
-
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
