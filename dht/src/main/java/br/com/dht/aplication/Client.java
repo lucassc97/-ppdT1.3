@@ -1,6 +1,7 @@
 package br.com.dht.aplication;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
 
 import com.rabbitmq.client.Channel;
@@ -82,22 +83,67 @@ public class Client extends Thread {
 			subGetOk();
 			subPutOk();
 
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			System.out.println(" [xxx]");
-			pubPut("5", "Olá Mundo!");
+			pubPut("0", "Borda do mundo!");
 
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			System.out.println(" [xxx]");
-			pubGet("5");
+			pubGet("0");
 
-			//////////////////////
-			Thread.sleep(2000);
+			Thread.sleep(1000);
+			System.out.println(" [xxx]");
+			pubPut("229495846", "Olá Mundo!");
+
+			Thread.sleep(1000);
+			System.out.println(" [xxx]");
+			pubGet("229495846");
+
+			Thread.sleep(1000);
 			System.out.println(" [xxx]");
 			pubPut("4294967295", "Aqui é a Borda do Mundo!");
 
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			System.out.println(" [xxx]");
 			pubGet("4294967295");
+
+			Thread.sleep(1000);
+			System.out.println(" [xxx]");
+			System.out.println("Utilize a interface padrão (via console):");
+			System.out.println("get(key) ou put(key, value)");
+
+			Scanner sc = new Scanner(System.in);
+
+			while (true) {
+				if (sc.hasNextLine()) {
+					String console = sc.nextLine().trim();
+
+					System.out.println(console);
+
+					if (console.contains("put(") && console.lastIndexOf(")") == console.length() - 1) {
+						int indice = console.indexOf(",");
+
+						String chave = console.substring(4, indice).trim();
+						String valor = console.substring(indice + 1, console.length() - 1).trim();
+
+						System.out.println("chave: '" + chave + "'");
+						System.out.println("valor: '" + valor + "'");
+
+						pubPut(chave, valor);
+
+					} else if (console.contains("get(") && console.lastIndexOf(")") == console.length() - 1) {
+						String chave = console.substring(4, console.length() - 1).trim();
+
+						System.out.println("chave: '" + chave + "'");
+
+						pubGet(chave);
+
+					} else {
+						System.out.println("ERROR, Formato de entrada invalido.");
+						System.out.println("Digite: get(key) ou put(key, value)");
+					}
+				}
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

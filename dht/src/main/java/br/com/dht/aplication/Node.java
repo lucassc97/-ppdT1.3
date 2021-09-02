@@ -136,7 +136,7 @@ public class Node extends Thread {
 
 			int indice = mensagem.indexOf(" , ");
 			String chave = mensagem.substring(0, indice);
-			String valor = mensagem.substring(indice + 3, mensagem.length() - 1);
+			String valor = mensagem.substring(indice + 3, mensagem.length());
 
 			Long key = Long.valueOf(chave);
 
